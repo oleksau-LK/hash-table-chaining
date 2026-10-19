@@ -1,28 +1,29 @@
-# Hash table with chaining
+# Хеш-таблица методом цепочек
 
-Simple Python 3 hash table. Each bucket holds a singly linked list to handle
-collisions. No dependencies are required.
+Реализация на Python 3 без внешних зависимостей. Коллизии разрешаются
+односвязными списками в каждой корзине.
 
-Keys are integers or strings; values can be any object. Integer keys use modulo
-hashing; strings use a polynomial hash with multiplier 31. The bucket count is
-fixed (default: 16). Operations take O(1) time on average with short chains and
-O(n) in the worst case.
+Ключи — целые числа или строки, значения — любые объекты. Для чисел используется
+остаток от деления, для строк — полиномиальный хеш с множителем 31.
+Число корзин фиксировано (по умолчанию 16). Сложность операций при коротких
+цепочках — O(1) в среднем, в худшем случае — O(n).
 
 ```python
 from hash_table import HashTable
 
 table = HashTable(capacity=5)
 table.insert("apple", 10)
-table.insert("apple", 20)  # Replace the existing value.
+table.insert("apple", 20)
 print(table.search("apple"))  # 20
 print(table.delete("apple"))  # 20
 print(len(table))  # 0
 ```
 
-`search` and `delete` raise `KeyError` for missing keys. Unsupported key types
-raise `TypeError`. Capacity must be a positive integer.
+Повторная вставка ключа обновляет значение. Если ключ отсутствует, `search`
+и `delete` вызывают `KeyError`. Неподдерживаемый тип ключа вызывает `TypeError`.
+Число корзин должно быть положительным целым числом.
 
-Run tests, including forced collisions and deletion at every chain position:
+Запуск тестов, включая частые коллизии и удаление из разных позиций цепочки:
 
 ```sh
 python3 -m unittest -v
